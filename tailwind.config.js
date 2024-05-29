@@ -1,5 +1,4 @@
 // tailwind.config.js
-
 module.exports = {
   content: [
     './index.html',
@@ -8,7 +7,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [
-    require('tailwindcss/postcss7-compat') // Add this line
-  ],
+  plugins: [],
 };
