@@ -6,8 +6,8 @@ const Header = () => {
         <header>
             <nav>
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/products">Products</Link></li>
+                    <li class= "text-"><Link to="/">Home</Link></li>
+                    <li><Link to="/Shop">Shop</Link></li>
                     <li><Link to="/cart">Cart</Link></li>
                 </ul>
             </nav>
