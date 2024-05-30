@@ -10,15 +10,19 @@ const Header = () => {
                     <NavLink to="/" className="text-lg font-semibold">Clean Bin</NavLink>
                     <ul className="ml-4 flex space-x-4">
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/shop">Shop</NavLink></li>
-                        <li><NavLink to="/about">About</NavLink></li>
+                        <li><NavLink to="/Shop">Shop</NavLink></li>
+                        <li><NavLink to="/About">About</NavLink></li>
                     </ul>
                 </div>
                 <div className="flex items-center">
                     <input type="text" placeholder="Search" className="mr-4 p-2 rounded-md border border-gray-400" />
-                    <button className="mr-4">
-                        {/* Cart icon and logic here */}
-                    </button>
+                    <NavLink to="/user">
+                    <i class="fa-solid fa-house-user"></i>
+                    </NavLink>
+                    <NavLink to="/cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    </NavLink>
                     <button>
                         
                     </button>
