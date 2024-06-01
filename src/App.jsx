@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AuthProvider from './components/AuthProvider';
+//import AuthProvider from './components/AuthProvider';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 
@@ -15,12 +15,12 @@ import NotFound from './pages/NotFound';
 import About from './pages/About';
 
 const App = () => {
-    {  const [authMode, setAuthMode] = useState('login');
+    {/* const [authMode, setAuthMode] = useState('login');
 
     const toggleAuthMode = () => {
       setAuthMode((prevMode) => (prevMode === 'login' ? 'signup' : 'login'));
     };
-}
+*/}
 
 
 
@@ -30,7 +30,7 @@ const App = () => {
         
         <Router>
             <main>
-                {<AuthProvider>
+                {/*<AuthProvider>
       {({ user }) =>
         user ? (
           <div>Welcome, {user.email}</div>
@@ -40,7 +40,7 @@ const App = () => {
           <SignUp toggleAuthMode={toggleAuthMode} />
         )
       }
-    </AuthProvider>}
+    </AuthProvider>*/}
             <Header />
             <Routes><Route path="About" element={<About/>}/>
                     <Route path="/" element={<Home />} />
