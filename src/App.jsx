@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AuthProvider from './components/AuthProvider';
+// import AuthProvider from './components/AuthProvider';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 
@@ -19,32 +19,12 @@ import About from './pages/About';
 
 
 const App = () => {
-    const [authMode, setAuthMode] = useState('login');
-
-    const toggleAuthMode = () => {
-      setAuthMode((prevMode) => (prevMode === 'login' ? 'signup' : 'login'));
-    };
-  
-
-
-
-
 
     return (
-        
         <Router>
+            <SignUp/>
+           
             <main>
-            <AuthProvider>
-      {({ user }) =>
-        user ? (
-          <div>Welcome, {user.email}</div>
-        ) : authMode === 'login' ? (
-          <Login toggleAuthMode={toggleAuthMode} />
-        ) : (
-          <SignUp toggleAuthMode={toggleAuthMode} />
-        )
-      }
-    </AuthProvider>
             <Header />
             <Routes><Route path="About" element={<About/>}/>
                     <Route path="/" element={<Home />} />
