@@ -4,14 +4,14 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBmzk6AvrwNUY0I7CO69AJ1_bbUCL0mVYQ",
-  authDomain: "just-bin.firebaseapp.com",
-  databaseURL: "https://just-bin-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "just-bin",
-  storageBucket: "just-bin.appspot.com",
-  messagingSenderId: "716395933630",
-  appId: "1:716395933630:web:bbf139fdf749456c7e13ef",
-  measurementId: "G-518NZDNHCB"
+  apiKey:import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_DATA_URL,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGE_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASURE_ID
 };
 
 
