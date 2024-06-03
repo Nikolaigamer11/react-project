@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword ,signInWithEmailAndPassword as SignIn} f
 import React, { useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { setDoc, doc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -12,8 +13,27 @@ const SignUp = () => {
   const [pnum, setPnum] = useState("");
   const [isSignUpActive, setIsSignUpActive] = useState(true);
 
+
+  const navigate = useNavigate();
+
+  const goToHome = () => {
+    navigate('/');
+  };
+
+  
+function resetPTag() {
+    const existDiv = document.getElementById('exist');
+    if (existDiv) {
+      const pTag = existDiv.querySelector('p');
+      if (pTag) {
+        pTag.textContent = ''; // Reset the content of the <p> tag
+      }
+    }
+}
+  
   const MethodChange = () => {
     setIsSignUpActive(!isSignUpActive);
+    resetPTag();
   };
 
 
@@ -32,6 +52,9 @@ const SignUp = () => {
             .then((uCred)=>{
               const user=uCred.user;
               console.log("logged In",user,"succesfully");
+              goToHome();
+
+
             });
 
           } catch (error) {
@@ -75,6 +98,7 @@ const SignUp = () => {
               phoneNumber: pnum,
               address: address,
             });
+            goToHome();
           }
           alert("user registered", user.uid, "and name of", fname);
 
