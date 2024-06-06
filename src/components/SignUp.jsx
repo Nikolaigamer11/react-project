@@ -32,10 +32,13 @@ const SignUp = () => {
             .then((uCred)=>{
               const user=uCred.user;
               console.log("logged In",user,"succesfully");
+              isSignUpActive=useState(false);
             });
 
           } catch (error) {
-            alert(error.code)
+            if ((error.code = "auth/invalid-email")) {
+              alert("no user found, Register ?");
+            }
           }
     }
   }
@@ -99,18 +102,18 @@ const SignUp = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
         <form>
-          {isSignUpActive && (
+          {!isSignUpActive && (
             <legend className="text-2xl font-bold mb-6 text-center">
               Register
             </legend>
           )}
-          {!isSignUpActive && (
+          {isSignUpActive && (
             <legend className="text-2xl font-bold mb-6 text-center">
               Log In
             </legend>
           )}
           <fieldset>
-            {isSignUpActive && (
+            {!isSignUpActive && (
               <div className="mb-4">
                 <label
                   htmlFor="fname"
@@ -127,7 +130,7 @@ const SignUp = () => {
                 />
               </div>
             )}
-            {isSignUpActive && (
+            {!isSignUpActive && (
               <div className="mb-4">
                 <label
                   htmlFor="lname"
@@ -144,7 +147,7 @@ const SignUp = () => {
                 />
               </div>
             )}
-            {isSignUpActive && (
+            {!isSignUpActive && (
               <div className="mb-6">
                 <label
                   htmlFor="pnum"
@@ -165,7 +168,7 @@ const SignUp = () => {
             <div className="exist font-semibold text-red-600">
               <p></p>
             </div>
-            {isSignUpActive && (
+            {!isSignUpActive && (
               <div className="mb-4">
                 <label
                   htmlFor="address"
@@ -213,7 +216,7 @@ const SignUp = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            {isSignUpActive && (
+            {!isSignUpActive && (
               <button
                 onClick={handleSignUp}
                 type="button"
@@ -223,7 +226,7 @@ const SignUp = () => {
               </button>
             )}
 
-            {!isSignUpActive && (
+            {isSignUpActive && (
               <button
               onClick={ handleSignIn}
                 type="button"
@@ -233,8 +236,8 @@ const SignUp = () => {
               </button>
             )}
           </fieldset>
-          {isSignUpActive && <a onClick={MethodChange}>Log In</a>}
-          {!isSignUpActive && <a onClick={MethodChange}>Create an account</a>}
+          {!isSignUpActive && <a onClick={MethodChange}>Log In</a>}
+          {isSignUpActive && <a onClick={MethodChange}>Create an account</a>}
         </form>
       </div>
     </div>

@@ -1,7 +1,22 @@
-import { Navigate } from "react-router-dom"
-import SignUp from "./SignUp"
+import { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 
-export const RouteSignUp=({childern,user})=>
-    {
-        return user ? childern : <Navigate to={<SignUp/>}></Navigate>
-    }
+// Define and export the custom hoo
+function useAuthStatus (auth) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if(user){
+                setIsLoggedIn(true)
+                console.log(setIsLoggedIn);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth]);
+
+    return isLoggedIn;
+};
+
+export default useAuthStatus;
