@@ -11,7 +11,7 @@ const ProtectedRoute = ({ roles, redirectPath = '/SignUp' }) => {
 
   // Redirect if user is not logged in or doesn't have required roles
   if (!user || (roles && !roles.includes(user.role))) {
-    return <Navigate to={redirectPath} />;
+    return <Navigate to={"/"} />;
   }
 
   return <Outlet />;

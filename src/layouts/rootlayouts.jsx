@@ -1,11 +1,12 @@
 import { NavLink, Outlet } from "react-router-dom";
 import React from "react";
-import useAuthStatus from "../components/Pro_Routing";
-// import { auth } from "../firebaseConfig";
+import { useAuth } from "../components/AuthProvider";
 
 export default function RootLayouts() {
-  const isLoggedIn = useAuthStatus;
-  console.log(isLoggedIn);
+  const { user, loading } = useAuth();
+  
+  // Return early if loading to avoid flickering UI
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -33,24 +34,23 @@ export default function RootLayouts() {
               placeholder="Search"
               className="mr-4 p-2 rounded-md border border-gray-400"
             />
-              {isLoggedIn && <NavLink className="pr-2 border border-blue-600 " to="/SignUp">
-             Log in</NavLink>}
-
-             {!isLoggedIn && <NavLink className="pr-2 border border-red-600" to="/SignOut">
-             Sign Out</NavLink>}
-            
-            {!isLoggedIn && <NavLink className="pr-2 border border-blue-600" to="/cart">
-             Cart
-            </NavLink>}
-
-            {/* {!isLoggedIn && <NavLink className="pr-2 border border-red-600" to="/cart"> */}
-             
-            {/* </NavLink>} */}
-            <button></button>
+            {!user ? (
+              <NavLink className="pr-2 border border-blue-600" to="/SignUp">
+                Log in
+              </NavLink>
+            ) : (
+              <>
+                <NavLink className="pr-2 border border-red-600" to="/SignOut">
+                  Sign Out
+                </NavLink>
+                <NavLink className="pr-2 border border-blue-600" to="/cart">
+                  Cart
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </nav>
-
       <main>
         <Outlet />
       </main>

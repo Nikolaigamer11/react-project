@@ -1,27 +1,29 @@
-import { createUserWithEmailAndPassword ,signInWithEmailAndPassword as SignIn} from "firebase/auth";
-import React, { useState } from "react";
-import { auth, db } from "../firebaseConfig";
-import { setDoc, doc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword as SignIn } from "firebase/auth"; // Importing authentication methods from Firebase
+import React, { useState } from "react"; // Importing React and useState hook
+import { auth, db } from "../firebaseConfig"; // Importing Firebase authentication and Firestore configuration
+import { setDoc, doc } from "firebase/firestore"; // Importing Firestore methods to set documents
+import { useNavigate } from 'react-router-dom'; // Importing useNavigate hook for navigation
 
+// SignUp component to handle user registration and login
 const SignUp = () => {
+  // State hooks for form fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [address, setAddress] = useState("");
   const [pnum, setPnum] = useState("");
-  const [isSignUpActive, setIsSignUpActive] = useState(true);
+  const [isSignUpActive, setIsSignUpActive] = useState(true); // Toggle between sign-up and sign-in forms
 
+  const navigate = useNavigate(); // Initialize navigate function
 
-  const navigate = useNavigate();
-
+  // Function to navigate to home page
   const goToHome = () => {
     navigate('/');
   };
 
-  
-function resetPTag() {
+  // Function to reset the error message in the 'exist' div
+  function resetPTag() {
     const existDiv = document.getElementById('exist');
     if (existDiv) {
       const pTag = existDiv.querySelector('p');
@@ -29,50 +31,43 @@ function resetPTag() {
         pTag.textContent = ''; // Reset the content of the <p> tag
       }
     }
-}
-  
+  }
+
+  // Toggle between sign-up and sign-in forms
   const MethodChange = () => {
     setIsSignUpActive(!isSignUpActive);
     resetPTag();
   };
 
-
+  // Handle user sign-in
   const handleSignIn = async (e) => {
     e.preventDefault();
-    switch(true){
+    switch (true) {
       case email.length === 0:
         alert("Email field cannot be empty.");
         break;
       case password.length < 6:
         alert("Password is too short.");
         break;
-        default:
-          try {
-            await SignIn(auth, email, password)
-            .then((uCred)=>{
-              const user=uCred.user;
-              console.log("logged In",user,"succesfully");
-<<<<<<< HEAD
-              isSignUpActive=useState(false);
-=======
-              goToHome();
-
-
->>>>>>> 0c703ef44d02621a533fce2e39f58214acc7a966
-            });
-
-          } catch (error) {
-            if ((error.code = "auth/invalid-email")) {
-              alert("no user found, Register ?");
-            }
+      default:
+        try {
+          await SignIn(auth, email, password).then((uCred) => {
+            const user = uCred.user;
+            console.log("logged In", user, "successfully");
+            setIsSignUpActive(false);
+            goToHome();
+          });
+        } catch (error) {
+          if ((error.code = "auth/invalid-email")) {
+            alert("No user found, Register?");
           }
+        }
     }
-  }
+  };
 
-
+  // Handle user sign-up
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // Add your registration logic here
     switch (true) {
       case fname.length === 0:
         alert("First name field cannot be empty.");
@@ -106,24 +101,16 @@ function resetPTag() {
             });
             goToHome();
           }
-          alert("user registered", user.uid, "and name of", fname);
-
-
-
+          alert("User registered", user.uid, "and name of", fname);
         } catch (error) {
-          alert(error.code)
+          alert(error.code);
           if ((error = "Firebase: Error (auth/email-already-in-use).")) {
             const targetDiv = document.querySelector(".exist");
-            targetDiv.innerHTML = "Email already exist";
+            targetDiv.innerHTML = "Email already exists";
           }
         }
     }
   };
-
-
-
-
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -191,9 +178,8 @@ function resetPTag() {
                 />
               </div>
             )}
-
             <div className="exist font-semibold text-red-600">
-              <p></p>
+              <p></p> {/* Placeholder for error messages */}
             </div>
             {!isSignUpActive && (
               <div className="mb-4">
@@ -212,7 +198,6 @@ function resetPTag() {
                 />
               </div>
             )}
-
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -252,10 +237,9 @@ function resetPTag() {
                 Register
               </button>
             )}
-
             {isSignUpActive && (
               <button
-              onClick={ handleSignIn}
+                onClick={handleSignIn}
                 type="button"
                 className="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
@@ -271,4 +255,4 @@ function resetPTag() {
   );
 };
 
-export default SignUp;
+export default SignUp; // Exporting the SignUp component as default
