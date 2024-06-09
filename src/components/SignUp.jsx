@@ -1,8 +1,11 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword as SignIn } from "firebase/auth"; // Importing authentication methods from Firebase
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword as SignIn,
+} from "firebase/auth"; // Importing authentication methods from Firebase
 import React, { useState } from "react"; // Importing React and useState hook
 import { auth, db } from "../firebaseConfig"; // Importing Firebase authentication and Firestore configuration
 import { setDoc, doc } from "firebase/firestore"; // Importing Firestore methods to set documents
-import { useNavigate } from 'react-router-dom'; // Importing useNavigate hook for navigation
+import { Navigate } from "react-router-dom"; // Importing useNavigate hook for navigation
 
 // SignUp component to handle user registration and login
 const SignUp = () => {
@@ -15,28 +18,22 @@ const SignUp = () => {
   const [pnum, setPnum] = useState("");
   const [isSignUpActive, setIsSignUpActive] = useState(true); // Toggle between sign-up and sign-in forms
 
-  const navigate = useNavigate(); // Initialize navigate function
-
-  // Function to navigate to home page
-  const goToHome = () => {
-    navigate('/');
-  };
-
   // Function to reset the error message in the 'exist' div
-  function resetPTag() {
-    const existDiv = document.getElementById('exist');
-    if (existDiv) {
-      const pTag = existDiv.querySelector('p');
-      if (pTag) {
-        pTag.textContent = ''; // Reset the content of the <p> tag
-      }
-    }
+  function resetdivTag() {
+    const targetDiv = document.querySelector(".exist");
+    targetDiv.innerHTML = ""; // Reset the content of the <p> tag
+  }
+
+  function errorText(error) {
+    const targetDiv = document.querySelector(".exist");
+    targetDiv.innerHTML = error;
   }
 
   // Toggle between sign-up and sign-in forms
   const MethodChange = () => {
     setIsSignUpActive(!isSignUpActive);
-    resetPTag();
+
+    resetdivTag();
   };
 
   // Handle user sign-in
@@ -53,15 +50,17 @@ const SignUp = () => {
         try {
           await SignIn(auth, email, password).then((uCred) => {
             const user = uCred.user;
-            console.log("logged In", user, "successfully");
-            setIsSignUpActive(false);
-            goToHome();
+            alert("logged In", user.uid, "successfully");
           });
         } catch (error) {
           if ((error.code = "auth/invalid-email")) {
-            alert("No user found, Register?");
+            // alert("");
+            // const targetDiv = document.querySelector(".exist");
+            // targetDiv.innerHTML = "No user found, Register one ?";
+            errorText("No user found, Register?");
           }
         }
+        return <Navigate to="/" replace="{true}" />;
     }
   };
 
@@ -99,17 +98,16 @@ const SignUp = () => {
               phoneNumber: pnum,
               address: address,
             });
-            goToHome();
           }
           alert("User registered", user.uid, "and name of", fname);
+          return <Navigate to="/" replace={true} />;
         } catch (error) {
-          alert(error.code);
           if ((error = "Firebase: Error (auth/email-already-in-use).")) {
-            const targetDiv = document.querySelector(".exist");
-            targetDiv.innerHTML = "Email already exists";
+            errorText("email already in use");
           }
         }
     }
+    //  return <Navigate to="/" />
   };
 
   return (
@@ -179,7 +177,7 @@ const SignUp = () => {
               </div>
             )}
             <div className="exist font-semibold text-red-600">
-              <p></p> {/* Placeholder for error messages */}
+              {/* Placeholder for error messages */}
             </div>
             {!isSignUpActive && (
               <div className="mb-4">
