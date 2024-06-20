@@ -26,43 +26,45 @@ import ProtectedRoute from "./components/Pro_Routing";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayouts />}>
-      <Route index element={<Home />} />
-      <Route path="About" element={<About />} />
-      <Route path="Shop" element={<Shop />} />
-      <Route path="Shop/:id" element={<ProductDetails />} />
+  <Route index element={<Shop />} />  {/* Change Home to Shop */}
+  <Route path="Home" element={<Home/>}/>
+  <Route path="About" element={<About />} />
 
-      {/* Protected route for cart, only accessible for logged-in users */}
-      <Route
-        path="cart"
-        element={
-          <ProtectedRoute>
-            <Cart />
-          </ProtectedRoute>
-        }
-      />
+  <Route path="Shop" element={<Shop />} />
+  <Route path="Shop/:id" element={<ProductDetails />} />
 
-      {/* Restrict logged-in users from accessing SignUp page */}
-      <Route
-        path="SignUp"
-        element={
-          <ProtectedRoute restrictToUnauth>
-            <SignUp />
-          </ProtectedRoute>
-        }
-      />
+  {/* Protected route for cart, only accessible for logged-in users */}
+  <Route
+    path="cart"
+    element={
+      <ProtectedRoute>
+        <Cart />
+      </ProtectedRoute>
+    }
+  />
 
-      {/* SignOut should be accessible only by authenticated users */}
-      <Route
-        path="SignOut"
-        element={
-          <ProtectedRoute>
-            <Logout />
-          </ProtectedRoute>
-        }
-      />
+  {/* Restrict logged-in users from accessing SignUp page */}
+  <Route
+    path="SignUp"
+    element={
+      <ProtectedRoute restrictToUnauth>
+        <SignUp />
+      </ProtectedRoute>
+    }
+  />
 
-      <Route path="*" element={<NotFound />} />
-    </Route>
+  {/* SignOut should be accessible only by authenticated users */}
+  <Route
+    path="SignOut"
+    element={
+      <ProtectedRoute>
+        <Logout />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route path="*" element={<NotFound />} />
+</Route>
   )
 );
 

@@ -18,10 +18,10 @@ export default function RootLayouts() {
             </NavLink>
             <ul className="ml-4 flex space-x-4">
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/Home">Home</NavLink>
               </li>
               <li>
-                <NavLink to="/Shop">Shop</NavLink>
+                <NavLink to="/">Shop</NavLink>
               </li>
               <li>
                 <NavLink to="/About">About</NavLink>
